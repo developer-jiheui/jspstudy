@@ -15,7 +15,7 @@ public class DeleteCookie extends HttpServlet {
         String cookieName = request.getParameter("cookieName");
 
         //delete
-        Cookie cookie = new Cookie(cookieName,"아무의미없는 값");
+        Cookie cookie = new Cookie(cookieName,"아무의미없는값");
         cookie.setMaxAge(0);
         response.addCookie(cookie);
 
