@@ -51,17 +51,67 @@
                 for (let i = 0; i < locals.length; i++) {
                     let content = "";
                     content += '<tr>';
-                    content += '<td>' + locals[i].textContent +'</td>';
-                    content += '<td>' + locals[i].getAttribute('desc') +'</td>';
-                    content += '<td>' + locals[i].getAttribute('ta') +'</td>';
+                    content += '<td>' + locals[i].textContent + '</td>';
+                    content += '<td>' + locals[i].getAttribute('desc') + '</td>';
+                    content += '<td>' + locals[i].getAttribute('ta') + '</td>';
                     content += '</tr>';
-                    contents1.innerHTML+= content;
+                    contents1.innerHTML += content;
                 }
             })
     }
 
     document.getElementById("btn1").addEventListener('click', getData1);
 
+</script>
+<div>
+    <button type="button" id="btn2">정보가져오기2</button>
+</div>
+<table border ="1">
+    <thead>
+    <tr>
+        <td>발생일시</td>
+        <td>사망자수</td>
+        <td>부상자수</td>
+    </tr>
+    </thead>
+    <tbody id="contents2"></tbody>
+</table>
+<script>
+    const getData2 = () => {
+        // $.ajax({
+        //     //요청
+        //     type: 'GET',
+        //     url : '/servlet/getData2',
+        //
+        //     //응답
+        //     dataType: 'json', //'xml', 'json'
+        //     success : (resData)=>{
+        //         let domParser = new DOMParser();
+        //     },
+        //     error:(jqXHR)=>{
+        //         console.log(jqXHR);
+        //     }
+        // })
+        $.ajax({
+            type: 'GET',
+            url: '/servlet/getData2',
+            dataType: 'json', //'xml', 'json'
+        }).done((resData) => {
+            $.each(resData.items.item,(i,data)=>{
+                let str = '<tr>'
+                str += '<td>' + data.occrrnc_dt +'</td>'
+                str += '<td>' + data.dth_dnv_cnt +'</td>'
+                str += '<td>' + data.injpsn_cnt	 +'</td>'
+                str += '</tr>'
+                $('#contents2').append(str);
+            })
+
+        }).fail((jqXHR) => {
+            console.log(jqXHR.responseText+'('+jqXHR.status +')');
+        })
+    }
+
+    $('#btn2').on('click', getData2)
 </script>
 </body>
 </html>
