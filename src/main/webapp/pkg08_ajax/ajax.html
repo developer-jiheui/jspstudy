@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div>
+    <button type="button" id="btn1">정보가져오기</button>
+</div>
+<table border="1">
+    <tbody id="contents1">
+    </tbody>
+</table>
+<script>
+
+    //xml 데이터 요청
+    const getData1 = () => {
+        const options = {
+            method: 'GET'
+        }
+        fetch('/servlet/getData1', options)
+            // .then((response)=>{
+            //     if(response.ok){
+            //         return response.text();// xml 데이터는 text
+            //     }
+            // }) same code
+            .then(response => response.text())
+            .then(resData => {
+                console.log(resData)
+            })
+    }
+
+    document.getElementById("btn1").addEventListener('click', getData1);
+
+</script>
+</body>
+</html>
