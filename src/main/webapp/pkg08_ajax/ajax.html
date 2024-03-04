@@ -30,7 +30,33 @@
             // }) same code
             .then(response => response.text())
             .then(resData => {
-                console.log(resData)
+                //String 타입 resData를 xml로 변환
+                const domParser = new DOMParser();
+                let xmlDoc = domParser.parseFromString(resData, 'application/xml');
+
+                //<tbody>
+                const contents1 = document.getElementById('contents1');
+
+                //<contents for tbody
+                const weather = xmlDoc.getElementsByTagName('weather')[0];
+                contents1.innerHTML += '<tr><td colspan = "3">' + weather.getAttribute('year') + '-'
+                    + weather.getAttribute('month') + '-'
+                    + weather.getAttribute('day') + '&nbsp;'
+                    + weather.getAttribute('hour') + '시</td></tr>'
+                console.log(xmlDoc);
+
+                //local desc="맑음" ta="4.5"><>
+                const locals = xmlDoc.getElementsByTagName('local');
+
+                for (let i = 0; i < locals.length; i++) {
+                    let content = "";
+                    content += '<tr>';
+                    content += '<td>' + locals[i].textContent +'</td>';
+                    content += '<td>' + locals[i].getAttribute('desc') +'</td>';
+                    content += '<td>' + locals[i].getAttribute('ta') +'</td>';
+                    content += '</tr>';
+                    contents1.innerHTML+= content;
+                }
             })
     }
 
